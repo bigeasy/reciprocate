@@ -1,6 +1,6 @@
 {
     "name":                 "skip",
-    "version":              "0.0.13",
+    "version":              "0.1.0",
     "description":
 
       "Trampoline for use with Strata MVCC `async`/`await` libraries.",
@@ -8,8 +8,8 @@
     "keywords":
     [
                             "btree", "leveldb", "levelup", "binary", "mvcc",
-                            "database", "json", "b-tree", "concurrent",
-                            "persistence", "async", "trampoline"
+                            "database", "json", "b-tree", "concurrent", "persistence",
+                            "async", "trampoline"
     ],
     "author":               "Alan Gutierrez <alan@prettyrobots.com>",
     "homepage":             "https://github.com/bigeasy/skip",
@@ -20,7 +20,6 @@
                             "type": "git",
                             "url": "bigeasy/skip"
     },
-    "main":                 "trampoline",
     "dependencies":
     {
     },
@@ -28,6 +27,7 @@
     {
                             "proof":                        "^9.0.2"
     },
+    "main":                 "trampoline",
     "scripts":
     {
                             "test": "proof test/*.t.js"
