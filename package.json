@@ -1,6 +1,6 @@
 {
     "name":                 "skip",
-    "version":              "0.1.0",
+    "version":              "0.1.1",
     "description":
 
       "Trampoline for use with Strata MVCC `async`/`await` libraries.",
