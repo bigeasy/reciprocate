@@ -4,13 +4,13 @@ require('proof')(1, async okay => {
     const trampoline = new Trampoline
     const test = []
 
-    trampoline.push(() => test.push('called'))
+    trampoline.sync(() => test.push('sync'))
 
-    trampoline.push(async function () { test.push('called') } ())
+    trampoline.promised(async function () { test.push('async') })
 
     while (trampoline.seek()) {
         await trampoline.shift()
     }
 
-    okay(test, [ 'called', 'called' ], 'trampoline')
+    okay(test, [ 'sync', 'async' ], 'trampoline')
 })
