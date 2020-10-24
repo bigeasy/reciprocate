@@ -1,9 +1,9 @@
 {
-    "name":                 "skip",
-    "version":              "0.1.1",
+    "name":                 "reciprocate",
+    "version":              "9.9.9",
     "description":
 
-      "Trampoline for use with Strata MVCC `async`/`await` libraries.",
+      "An `async`/`await` trampoline.",
 
     "keywords":
     [
@@ -12,13 +12,13 @@
                             "async", "trampoline"
     ],
     "author":               "Alan Gutierrez <alan@prettyrobots.com>",
-    "homepage":             "https://github.com/bigeasy/skip",
-    "bugs":                 "https://github.com/bigeasy/skip/issues",
+    "homepage":             "https://github.com/bigeasy/reciprocate",
+    "bugs":                 "https://github.com/bigeasy/reciprocate/issues",
     "license":              "MIT",
     "repository":
     {
                             "type": "git",
-                            "url": "bigeasy/skip"
+                            "url": "bigeasy/reciprocate"
     },
     "dependencies":
     {
@@ -27,7 +27,7 @@
     {
                             "proof":                        "^9.0.2"
     },
-    "main":                 "trampoline",
+    "main":                 "reciprocate",
     "scripts":
     {
                             "test": "proof test/*.t.js"
