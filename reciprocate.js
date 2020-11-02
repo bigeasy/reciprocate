@@ -21,6 +21,23 @@ class Trampoline {
     shift () {
         return this._trampoline.shift().f.call(null)
     }
+
+    bounce (callback) {
+        try {
+            if (this.seek()) {
+                const promise = this.shift()
+                promise.then(() => {
+                    this.bounce(callback)
+                }).catch(error => {
+                    callback(error)
+                })
+            } else {
+                callback()
+            }
+        } catch (error) {
+            callback(error)
+        }
+    }
 }
 
 module.exports = Trampoline
