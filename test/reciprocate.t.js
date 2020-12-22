@@ -1,4 +1,4 @@
-require('proof')(5, async okay => {
+require('proof')(10, async okay => {
     const Trampoline = require('..')
 
     const trampoline = new Trampoline
@@ -52,4 +52,60 @@ require('proof')(5, async okay => {
     })
 
     await latch.promise
+
+    class Cache {
+        constructor () {
+            this._cache = {}
+            this._nextValue = 0
+        }
+
+        async vivify (key) {
+            this._cache[key] = this._nextValue++
+        }
+
+        get (key) {
+            const trampoline = new Trampoline
+            const got = this._cache[key]
+            if (got == null) {
+                return trampoline.promised(async () => {
+                    await this.vivify(key)
+                    trampoline.resolve(this.get(key), value => trampoline.set(value))
+                })
+            }
+            return trampoline.set(got)
+        }
+    }
+
+    const cache = new Cache
+
+    {
+        const trampoline = cache.get('a')
+        while (trampoline.seek()) {
+            await trampoline.shift()
+        }
+        okay(trampoline.value, 0, 'got')
+    }
+
+    {
+        const trampoline = cache.get('a')
+        while (trampoline.seek()) {
+            await trampoline.shift()
+        }
+        okay(trampoline.value, 0, 'got')
+    }
+
+    {
+        const got = await cache.get('a')
+        okay(got, 0, 'got')
+    }
+
+    {
+        cache.get('a').then(got => okay(got, 0, 'got'))
+    }
+
+    {
+        const trampoline = new Trampoline
+        const got = await trampoline.resolve(cache.get('b'), value => trampoline.set(value))
+        okay(got, 1, 'trampoline resolve, then loop')
+    }
 })
