@@ -26,6 +26,20 @@ async function main () {
         }
     }
 
+    class Redux {
+        recurse (count, trampoline = new Trampoline, f = value => trampoline.set(value)) {
+            if (count == 0) {
+                return f(0)
+            } else {
+                return this.recurse(count - 1, trampoline, value => f(value + 1))
+            }
+        }
+
+        get (count) {
+            return this.recurse(count)
+        }
+    }
+
     class External {
         recurse (count) {
             if (count == 0) {
@@ -109,6 +123,29 @@ async function main () {
             assert.equal(got, DEPTH)
         }
         console.log('objects await', Date.now() - start)
+    }
+
+    {
+        const start = Date.now()
+        const cache = new Redux
+        for (let i = 0; i < RUNS; i++) {
+            const got = await cache.get(DEPTH)
+            assert.equal(got, DEPTH)
+        }
+        console.log('redux await', Date.now() - start)
+    }
+
+    {
+        const start = Date.now()
+        const cache = new Redux
+        for (let i = 0; i < RUNS; i++) {
+            const trampoline = cache.get(DEPTH, new Trampoline)
+            while (trampoline.seek()) {
+                await trampoline.shift()
+            }
+            assert.equal(trampoline.value, DEPTH)
+        }
+        console.log('redux await external', Date.now() - start)
     }
 
     {
