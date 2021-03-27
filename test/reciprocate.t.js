@@ -26,7 +26,7 @@ require('proof')(10, async okay => {
     const latch = { promise: null, resolve: null }
     latch.promise = new Promise(resolve => latch.resolve = resolve)
 
-    trampoline.bounce(function (error) {
+    trampoline.callback(function (error) {
         okay(error == null, 'no error')
         okay(test, [ 'sync', 'async', 'sync' ], 'callback no error')
         latch.resolve()
@@ -37,7 +37,7 @@ require('proof')(10, async okay => {
     trampoline.promised(async () => {
         throw new Error('error')
     })
-    trampoline.bounce(function (error) {
+    trampoline.callback(function (error) {
         okay(error.message, 'error', 'callback async error')
         latch.resolve()
     })
@@ -46,7 +46,7 @@ require('proof')(10, async okay => {
     trampoline.sync(() => {
         throw new Error('error')
     })
-    trampoline.bounce(function (error) {
+    trampoline.callback(function (error) {
         okay(error.message, 'error', 'callback sync error')
         latch.resolve()
     })

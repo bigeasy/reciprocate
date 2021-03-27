@@ -90,12 +90,12 @@ class Trampoline {
         return this._trampoline.shift().operator.call(null)
     }
 
-    bounce (callback) {
+    callback (callback) {
         try {
             if (this.seek()) {
                 const promise = this.shift()
                 promise.then(() => {
-                    this.bounce(callback)
+                    this.callback(callback)
                 }).catch(error => {
                     callback(error)
                 })
