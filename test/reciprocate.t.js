@@ -1,5 +1,5 @@
 require('proof')(10, async okay => {
-    const Trampoline = require('..')
+    const { Trampoline } = require('..')
 
     const trampoline = new Trampoline
     const test = []

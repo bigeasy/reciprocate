@@ -108,4 +108,4 @@ class Trampoline {
     }
 }
 
-module.exports = Trampoline
+exports.Trampoline = Trampoline
